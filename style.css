@@ -1,9 +1,14 @@
+/* Il a pas pris ce chien de github, ah non mb c'est mon cache bref ce commentaire sert
+à rien du tout, j'vous laisse les mecs (utilité 0)*/
+
+@import url('https://fonts.googleapis.com/css2?family=League+Gothic&display=swap');
+
 body {
     margin: 0;
     overflow: hidden;
     user-select: none;
     background: white;
-    transition: background 2s;
+    transition: all ease-in-out 2s;
 }
 
 .crt-grid {
@@ -53,5 +58,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Il a pas pris ce chien de github */
+    font-family: "League Gothic", sans-serif;
+    animation: invert_start 2s steps(0) forwards;
+}
+
+@keyframes invert_start {
+    20%, 60%, 100% {
+        filter: invert(0);
+    }
+    0%, 40%, 80% {
+        filter: invert(1);
+    }
 }
