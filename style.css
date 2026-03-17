@@ -1,6 +1,9 @@
-html, body {
+body {
     margin: 0;
     overflow: hidden;
+    user-select: none;
+    background: white;
+    transition: background 2s;
 }
 
 .crt-grid {
@@ -22,7 +25,7 @@ html, body {
     width: 100vw;
     height: 100vh;
     z-index: 4999;
-    background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.6) 100%);
+    background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.356) 100%);
     pointer-events: none;
 }
 
@@ -40,10 +43,11 @@ html, body {
 }
 
 .whole-scene {
-    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
-    justify-content: center;
-    align-items: center;
-    background: #fff;
+    animation: camera-shake 6s ease-in-out infinite;
+    transform-origin: center center;
 }
