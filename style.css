@@ -43,11 +43,14 @@ body {
 }
 
 .whole-scene {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     animation: camera-shake 6s ease-in-out infinite;
     transform-origin: center center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
