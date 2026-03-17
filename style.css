@@ -62,6 +62,10 @@ body {
     animation: invert_start 2s steps(0) forwards;
 }
 
+.big_title {
+    font-size: 3em;
+}
+
 @keyframes invert_start {
     20%, 60%, 100% {
         filter: invert(0);
