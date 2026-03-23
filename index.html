@@ -1,17 +1,980 @@
+<!--
+ ________  ________  ________         ___  ________  ___  ___  ________                ________  _______   ___       _______   _____ ______      
+|\   __  \|\   __  \|\   ___  \      |\  \|\   __  \|\  \|\  \|\   __  \              |\   ____\|\  ___ \ |\  \     |\  ___ \ |\   _ \  _   \    
+\ \  \|\ /\ \  \|\  \ \  \\ \  \     \ \  \ \  \|\  \ \  \\\  \ \  \|\  \             \ \  \___|\ \   __/|\ \  \    \ \   __/|\ \  \\\__\ \  \   
+ \ \   __  \ \  \\\  \ \  \\ \  \  __ \ \  \ \  \\\  \ \  \\\  \ \   _  _\  ___        \ \_____  \ \  \_|/_\ \  \    \ \  \_|/_\ \  \\|__| \  \  
+  \ \  \|\  \ \  \\\  \ \  \\ \  \|\  \\_\  \ \  \\\  \ \  \\\  \ \  \\  \||\  \        \|____|\  \ \  \_|\ \ \  \____\ \  \_|\ \ \  \    \ \  \ 
+   \ \_______\ \_______\ \__\\ \__\ \________\ \_______\ \_______\ \__\\ _\\ \  \         ____\_\  \ \_______\ \_______\ \_______\ \__\    \ \__\
+    \|_______|\|_______|\|__| \|__|\|________|\|_______|\|_______|\|__|\|__|\/  /|       |\_________\|_______|\|_______|\|_______|\|__|     \|__|
+                                                                          |\___/ /       \|_________|                                            
+                                                                          \|___|/                                                                
+                                                                                                                                                 
+                        SITE DÉVELOPPÉ POUR LA NSI, C WOLFLEVRAI QUI ÉCRIT BG, GG T'AS TROUVÉ LE SITE C'EST FORT.
+-->
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portes logiques - Diapo</title>
-    <link rel="stylesheet" href="style.css">
+    <title>NSI EXPOSÉ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=League+Gothic&display=swap&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+        rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: "Determination-Regular";
+            src: url("Determination-Regular.otf"), format("opentype");
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            user-select: none;
+            background: white;
+            transition: background 2s;
+        }
+
+        .handheld-shake {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            animation: camera-shake 6s ease-in-out infinite;
+            transform-origin: center center;
+        }
+
+        @keyframes camera-shake {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg) scale(1.02);
+            }
+
+            10% {
+                transform: translate(-2px, -3px) rotate(-0.2deg) scale(1.02);
+            }
+
+            20% {
+                transform: translate(3px, 2px) rotate(0.2deg) scale(1.02);
+            }
+
+            30% {
+                transform: translate(-3px, 4px) rotate(-0.1deg) scale(1.02);
+            }
+
+            40% {
+                transform: translate(2px, -2px) rotate(0.3deg) scale(1.02);
+            }
+
+            50% {
+                transform: translate(-1px, 5px) rotate(-0.2deg) scale(1.02);
+            }
+
+            60% {
+                transform: translate(4px, -3px) rotate(0.1deg) scale(1.02);
+            }
+
+            70% {
+                transform: translate(-4px, 1px) rotate(-0.3deg) scale(1.02);
+            }
+
+            80% {
+                transform: translate(1px, 4px) rotate(0.2deg) scale(1.02);
+            }
+
+            90% {
+                transform: translate(3px, -1px) rotate(-0.1deg) scale(1.02);
+            }
+        }
+
+        .crt-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 5000;
+            pointer-events: none;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+            background-size: 100% 5px, 5px 100%;
+        }
+
+        .overlay_vignette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 4999;
+            background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.6) 100%);
+            pointer-events: none;
+        }
+
+        .blur-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            backdrop-filter: blur(5px);
+            -webkit-mask-image: radial-gradient(circle, transparent 20%, black 70%);
+            mask-image: radial-gradient(circle, transparent 20%, black 70%);
+        }
+
+        #btn-start {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 6000;
+            padding: 15px 40px;
+            font-family: 'Consolas', monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: black;
+            color: white;
+            border: 2px solid black;
+            cursor: pointer;
+            transition: all 0.2s;
+            filter: url(#handdrawn);
+        }
+
+        #btn-start:hover {
+            background: white;
+            color: black;
+            transform: translate(-50%, -55%);
+        }
+
+        #sponsor-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: transparent;
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            filter: url(#handdrawn);
+        }
+
+        .typewriter-container {
+            font-family: 'Consolas', monospace;
+            font-size: 1.5rem;
+            color: black;
+            display: flex;
+            align-items: center;
+        }
+
+        .text-part {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid black;
+            width: 0;
+        }
+
+        .brand-parody {
+            background: black;
+            color: white;
+            padding: 0 5px;
+            margin-left: 5px;
+            text-transform: uppercase;
+        }
+
+        .camera-rail {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 300vh;
+            transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .diapo-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            font-family: 'League Gothic', sans-serif;
+            font-size: 6em;
+            visibility: hidden;
+        }
+
+        .font-loaded .diapo-wrapper {
+            visibility: visible;
+            animation: invert_anim 0.5s steps(1) forwards;
+        }
+
+        .font-loaded h1 {
+            margin: 0;
+            opacity: 0;
+            animation: scale_start 2s cubic-bezier(0, 0.473, 0.34, 1) forwards;
+            transform: scaleY(1.5);
+            filter: url(#handdrawn);
+        }
+
+        @keyframes invert_anim {
+
+            0%,
+            40%,
+            80% {
+                filter: invert(1);
+            }
+
+            20%,
+            60%,
+            100% {
+                filter: invert(0);
+            }
+        }
+
+        @keyframes scale_start {
+            0% {
+                opacity: 0;
+                transform: scale(1.2) scaleY(1.5);
+            }
+
+            1% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) scaleY(1.5);
+            }
+        }
+
+        .img-container {
+            width: 800px;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: url(#handdrawn);
+        }
+
+        .img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: filter 2s ease, opacity 2s ease;
+        }
+
+        .camera-pull-back {
+            transform: scale(0.7);
+        }
+
+        .camera-pull-back img {
+            filter: blur(10px);
+            opacity: 0.2;
+        }
+
+        #slide-3-main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 4s cubic-bezier(0.7, 0, 0.3, 1), filter 4s ease, opacity 4s ease;
+        }
+
+        .creepy-extreme-zoom {
+            transform: scale(0.01) rotate(-15deg) !important;
+            filter: blur(50px) brightness(0);
+            opacity: 0;
+        }
+
+        .black-out-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: 0;
+            z-index: 90;
+            transition: opacity 3s;
+            pointer-events: none;
+        }
+
+        .fade-to-black .black-out-overlay {
+            opacity: 1;
+        }
+
+        .final-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .final-container {
+            position: relative;
+            padding: 40px;
+            text-align: center;
+            filter: url(#handdrawn);
+        }
+
+        .final-slide-content {
+            font-family: 'Consolas', monospace;
+            font-size: 2rem;
+            color: black;
+            position: relative;
+            z-index: 2;
+        }
+
+        .word {
+            display: inline-block;
+            visibility: hidden;
+            transform: translateY(10px);
+            margin-right: 12px;
+            filter: url(#handdrawn);
+        }
+
+        .word.animate {
+            animation: word-reveal 0.5s cubic-bezier(0, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes word-reveal {
+            0% {
+                visibility: visible;
+            }
+
+            to {
+                visibility: visible;
+                transform: translateY(0)
+            }
+        }
+
+        .scribble-svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-1deg);
+            width: 130%;
+            height: 250%;
+            z-index: 1;
+            pointer-events: none;
+            filter: url(#rough-edge);
+        }
+
+        .scribble-path {
+            fill: none;
+            stroke: #d60000;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+        }
+
+        .draw-now {
+            animation: draw-scribble 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes draw-scribble {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .docu-final-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1020;
+            pointer-events: none;
+        }
+
+        .mentions {
+            position: fixed;
+            bottom: 5vh;
+            font-size: 1.2rem;
+            font-family: Arial, sans-serif;
+            color: #555;
+            opacity: 0;
+            text-align: center;
+            width: 100%;
+            transition: opacity 0.5s;
+            z-index: 5000;
+        }
+
+        #flowey-dialogue {
+            position: absolute;
+            bottom: 18%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 72%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            image-rendering: pixelated;
+            z-index: 5000;
+        }
+
+        #flowey-dialogue-box {
+            background: black;
+            border: 6px solid white;
+            padding: 24px;
+            position: relative;
+            font-family: 'Determination-Regular', monospace;
+            font-size: 2.5rem;
+            color: white;
+            letter-spacing: 0.05em;
+            line-height: 1.4;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+        }
+
+        #flowey-text-line {
+            white-space: pre-wrap;
+            flex-grow: 1;
+        }
+
+        #flowey-portrait {
+            width: 120px;
+            height: 120px;
+            margin-right: 20px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #flowey-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #central-flowey {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #central-flowey img {
+            position: absolute;
+            width: 140px;
+            image-rendering: pixelated;
+        }
+
+        #flowey-background {
+            width: 650px !important;
+            z-index: -1;
+            transform: translateY(110px);
+            filter: grayscale(1);
+            opacity: 0.2;
+        }
+
+        .shake-text {
+            display: inline-block;
+            animation: text-shake 0.1s infinite;
+            font-size: 2.5rem;
+        }
+
+        @keyframes text-shake {
+            0% {
+                transform: translate(1px, 1px) rotate(0deg);
+            }
+
+            10% {
+                transform: translate(-1px, -2px) rotate(-1deg);
+            }
+
+            20% {
+                transform: translate(-3px, 0px) rotate(1deg);
+            }
+
+            30% {
+                transform: translate(3px, 2px) rotate(0deg);
+            }
+
+            40% {
+                transform: translate(1px, -1px) rotate(1deg);
+            }
+
+            50% {
+                transform: translate(-1px, 2px) rotate(-1deg);
+            }
+
+            60% {
+                transform: translate(-3px, 1px) rotate(0deg);
+            }
+
+            70% {
+                transform: translate(3px, 1px) rotate(-1deg);
+            }
+
+            80% {
+                transform: translate(-1px, -1px) rotate(1deg);
+            }
+
+            90% {
+                transform: translate(1px, 2px) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(1px, -2px) rotate(-1deg);
+            }
+        }
+
+        .video-ending {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10000;
+            background: #1f1f1f;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .center-text-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: black;
+        }
+
+        .excision-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: slight-move 3s ease-in-out forwards;
+            animation-delay: 2s;
+        }
+
+        .excision-top-line {
+            display: flex;
+            align-items: baseline;
+            position: relative;
+        }
+
+        .impact-zoom {
+            animation: impact-zoom-anim 2s cubic-bezier(0.2, 0, 0.3, 1) forwards;
+        }
+
+        @keyframes impact-zoom-anim {
+            0% {
+                transform: scale(0.6);
+                opacity: 0;
+            }
+
+            20% {
+                transform: scale(0.7);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slight-move {
+            0% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(-300px);
+            }
+        }
+
+        #on-appelle-ca-text {
+            display: inline-block;
+            font-size: 4rem;
+            margin: 0;
+            opacity: 0;
+            font-family: 'Google Sans', sans-serif;
+            text-transform: lowercase;
+            color: white;
+        }
+
+        #excision-pronunciation {
+            position: absolute;
+            left: 100%;
+            margin-left: 20px;
+            font-size: 2.5rem;
+            color: #666;
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            white-space: nowrap;
+        }
+
+        #excision-definition {
+            position: absolute;
+            top: 130%;
+            left: 0;
+            width: 800px;
+            font-size: 1.8rem;
+            color: #777;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            font-style: normal;
+            font-family: 'Google Sans', sans-serif;
+            text-align: left;
+        }
+    </style>
 </head>
+
 <body>
+
+    <button id="btn-start" onclick="startExperience()">Lancer le diaporama</button>
+
     <div class="crt-grid"></div>
     <div class="blur-overlay"></div>
     <div class="overlay_vignette"></div>
-    <div class="whole-scene">
-        <span class="big_title">LES PORTES LOGIQUES</span>
+
+    <svg style="position: absolute; width: 0; height: 0;">
+        <filter id="rough-edge">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" />
+        </filter>
+
+        <filter id="handdrawn" width="110%" height="110%">
+            <feTurbulence id="turbulenceEffect" type="turbulence" baseFrequency="0.01 0.006" numOctaves="3" seed="2">
+                <animate attributeName="baseFrequency" dur="2s"
+                    values="0.008 0.006;0.012 0.008;0.014 0.006;0.010 0.007;0.012 0.005;0.016 0.008;0.012 0.006;0.014 0.007;0.010 0.005"
+                    calcMode="discrete" repeatCount="indefinite" />
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" scale="3" xChannelSelector="R" yChannelSelector="B" />
+        </filter>
+    </svg>
+
+    <div class="handheld-shake">
+
+        <div id="sponsor-screen">
+            <div class="typewriter-container">
+                <div class="text-part" id="tp-text">Est-ce que <span class="brand-parody"> vous connaissez... </span></div>
+            </div>
+        </div>
+
+        <div class="mentions" id="legals">Vive la NSI d'ailleurs, j'pose ça là on sait jamais
+        </div>
+
+        <div class="camera-rail" id="rail">
+            <div class="slide">
+                <div class="diapo-wrapper">
+                    <h1 id="mainTitle">LES</h1>
+                </div>
+            </div>
+
+            <div class="slide">
+                <div id="slide-3-main">
+                    <div class="img-container" id="tasty-container"><img id="tasty-img" src="vignette-porte-wc-detalonnee.jpg"
+                            alt="Tasty Crousty"></div>
+
+                    <div class="final-overlay">
+                        <div class="final-container">
+                            <div class="final-slide-content" id="final-tp">Non car je parle en termes technologiques</div>
+                            <svg class="scribble-svg" viewBox="0 0 600 120">
+                                <path class="scribble-path" id="hand-scribble"
+                                    d="M20,60 C40,20 550,15 570,55 C585,95 30,110 15,65 C10,35 100,20 250,22 M30,75 C150,85 540,85 580,60 C600,30 400,25 200,30" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="black-out-overlay"></div>
+                <div class="docu-final-overlay">
+                    <div id="central-flowey">
+                        <img id="flowey-background" src="flowey_back.png" alt="Flowey Back">
+                        <img id="central-flowey-img" src="flowey_default.png" alt="Flowey Central">
+                    </div>
+                    <div id="flowey-dialogue">
+                        <div id="flowey-dialogue-box">
+                            <div id="flowey-portrait">
+                                <img id="flowey-img" src="flowey_default.png" alt="Flowey">
+                            </div>
+                            <span id="flowey-text-line"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="video-ending-overlay" class="video-ending">
+            <div class="center-text-box">
+                <div class="excision-wrapper">
+                    <div class="excision-top-line">
+                        <span id="on-appelle-ca-text">on appelle ça</span>
+                        <span id="excision-pronunciation">[ɛks.si.sjɔ̃]</span>
+                    </div>
+                    <div id="excision-definition">Une excision est, en chirurgie, l'ablation d'une partie de tissu
+                        biologique.</div>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <script>
+        let isStarted = false;
+        let skipToStep = 0;
+
+        const rail = document.getElementById('rail');
+        const tastyContainer = document.getElementById('tasty-container');
+        const finalTp = document.getElementById('final-tp');
+        const handScribble = document.getElementById('hand-scribble');
+        const slide3Main = document.getElementById('slide-3-main');
+        const slide3 = document.querySelectorAll('.slide')[1];
+
+        function resetPageState() {
+            document.body.classList.remove('font-loaded');
+            document.body.style.background = 'white';
+            rail.style.transform = 'translateY(0)';
+            rail.style.transition = 'transform 1.8s cubic-bezier(0.65, 0, 0.35, 1)';
+            
+            if (slide3) {
+                slide3.classList.remove('fade-to-black');
+            }
+            if (slide3Main) {
+                slide3Main.classList.remove('creepy-extreme-zoom');
+            }
+            if (tastyContainer) {
+                tastyContainer.classList.remove('camera-pull-back');
+            }
+            if (handScribble) {
+                handScribble.classList.remove('draw-now');
+            }
+            
+            document.querySelectorAll('.word').forEach(word => {
+                word.classList.remove('animate');
+            });
+            
+            const sponsorScreen = document.getElementById('sponsor-screen');
+            if (sponsorScreen) {
+                sponsorScreen.style.display = 'none';
+            }
+            
+            const legals = document.getElementById('legals');
+            if (legals) {
+                legals.style.opacity = '0';
+            }
+        }
+
+        resetPageState();
+
+        function prepareText(element, className) {
+            const words = element.innerText.split(' ');
+            element.innerHTML = '';
+            words.forEach((word) => {
+                const span = document.createElement('span');
+                span.classList.add(className);
+                span.innerText = word;
+                element.appendChild(span);
+            });
+        }
+        prepareText(finalTp, 'word');
+
+        function startExperience() {
+            if (isStarted) return;
+            isStarted = true;
+            document.getElementById('btn-start').style.display = 'none';
+
+            if (skipToStep > 0) {
+                runMainAnimation();
+                return;
+            }
+
+            const sponsorScreen = document.getElementById('sponsor-screen');
+            sponsorScreen.style.display = 'flex';
+            document.getElementById('tp-text').style.animation = "typing-sponsor 2s steps(45) forwards, hide-cursor-black 0.1s forwards 2s";
+            setTimeout(() => {
+                sponsorScreen.style.display = 'none';
+                runMainAnimation();
+            }, 3000);
+        }
+
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes typing-sponsor { from { width: 0; } to { width: 30ch; } } @keyframes hide-cursor-black { to { border-color: transparent; } }`;
+        document.head.appendChild(style);
+
+        let animationTimeouts = [];
+        function runMainAnimation() {
+            document.body.classList.add('font-loaded');
+
+            // Définition des étapes
+            const step1 = () => {
+                document.getElementById('mainTitle').innerText = "LES PORTES LOGIQUES";
+                document.getElementById('legals').style.opacity = 1;
+                currentStep = 1;
+            };
+            const step2 = () => {
+                rail.style.transform = "translateY(-100vh)";
+                currentStep = 2;
+            };
+            const step3 = () => {
+                rail.style.transform = "translateY(-100vh)";
+                document.getElementById('legals').style.opacity = 0;
+                currentStep = 3;
+            };
+            const step4 = () => {
+                tastyContainer.classList.add('camera-pull-back');
+                const words = document.querySelectorAll('.word');
+                words.forEach((word, index) => {
+                    setTimeout(() => { word.classList.add('animate'); }, 200 + (index * 80));
+                });
+                setTimeout(() => { handScribble.classList.add('draw-now'); }, 200 + (words.length * 80) + 150);
+                currentStep = 4;
+            };
+            const step5 = () => {
+                document.body.style.background = 'black';
+                slide3.classList.add('fade-to-black');
+                slide3Main.classList.add('creepy-extreme-zoom');
+                setTimeout(() => startFloweyDialogue(), 1500);
+                currentStep = 5;
+            };
+
+            const times = [0, 300, 1800, 3800, 5600, 8000];
+            const offset = (skipToStep >= 0 && skipToStep < times.length) ? times[skipToStep] : 0;
+
+            if (skipToStep > 0) {
+                rail.style.transition = 'none';
+                setTimeout(() => { rail.style.transition = "transform 1.8s cubic-bezier(0.65, 0, 0.35, 1)"; }, 50);
+            }
+
+            animationTimeouts.push(setTimeout(step1, Math.max(0, 300 - offset)));
+            animationTimeouts.push(setTimeout(step2, Math.max(0, 1800 - offset)));
+            animationTimeouts.push(setTimeout(step3, Math.max(0, 3800 - offset)));
+            animationTimeouts.push(setTimeout(step4, Math.max(0, 5600 - offset)));
+            animationTimeouts.push(setTimeout(step5, Math.max(0, 8000 - offset)));
+        }
+
+        const floweyLines = [
+            { text: "* Car c'est le nombre de vies qui ont été marquées, littéralement.", portrait: "flowey_default.png" },
+            { text: "* PAR UNE LAME", shake: true, portrait: "flowey_laugh.gif" },
+        ];
+
+        function startFloweyDialogue() {
+            const box = document.getElementById('flowey-dialogue');
+            const textEl = document.getElementById('flowey-text-line');
+            const portraitImg = document.getElementById('flowey-img');
+            const centralFlowey = document.getElementById('central-flowey');
+            const centralImg = document.getElementById('central-flowey-img');
+
+            box.style.opacity = '1';
+            centralFlowey.style.opacity = '1';
+
+            let lineIndex = 0;
+
+            function typeLine(line, onDone) {
+                if (line.portrait) {
+                    portraitImg.src = line.portrait;
+                    centralImg.src = line.portrait;
+                }
+                textEl.innerHTML = '';
+                if (line.shake) {
+                    textEl.innerHTML = `<span class="shake-text">${line.text}</span>`;
+                    setTimeout(onDone, 2500);
+                } else {
+                    let i = 0;
+                    const speed = 30;
+                    function typeChar() {
+                        if (i < line.text.length) {
+                            textEl.textContent += line.text[i++];
+                            setTimeout(typeChar, speed);
+                        } else {
+                            setTimeout(onDone, 1500);
+                        }
+                    }
+                    typeChar();
+                }
+            }
+
+            function nextLine() {
+                if (lineIndex >= floweyLines.length) {
+                    setTimeout(() => {
+                        const overlay = document.getElementById('video-ending-overlay');
+                        const onAppelleCa = document.getElementById('on-appelle-ca-text');
+                        const pronunciation = document.getElementById('excision-pronunciation');
+                        const definition = document.getElementById('excision-definition');
+
+                        overlay.style.display = 'flex';
+                        setTimeout(() => overlay.style.opacity = '1', 100);
+
+                        setTimeout(() => {
+                            onAppelleCa.classList.add('impact-zoom');
+                            setTimeout(() => {
+                                onAppelleCa.innerText = "l’excision";
+                            }, 1000);
+                            setTimeout(() => {
+                                pronunciation.style.opacity = '1';
+                                setTimeout(() => {
+                                    definition.style.opacity = '1';
+                                }, 600);
+                            }, 2000);
+                        }, 1000);
+                    }, 1000);
+                    return;
+                }
+                typeLine(floweyLines[lineIndex++], nextLine);
+            }
+            nextLine();
+        }
+
+        window.addEventListener('keydown', (e) => { if (e.code === 'Space') startExperience(); });
+    </script>
 </body>
+
 </html>
