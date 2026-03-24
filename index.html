@@ -876,13 +876,13 @@
                 setTimeout(() => { handScribble.classList.add('draw-now'); }, 200 + (words.length * 80) + 150);
                 currentStep = 4;
             };
-            // const step5 = () => {
-            //    document.body.style.background = 'black';
-            //    slide3.classList.add('fade-to-black');
+            const step5 = () => {
+                document.body.style.background = 'black';
+                slide3.classList.add('fade-to-black');
             //    slide3Main.classList.add('creepy-extreme-zoom');
             //    setTimeout(() => startFloweyDialogue(), 1500);
-            //    currentStep = 5;
-            // };
+                currentStep = 5;
+            };
 
             const times = [0, 300, 1800, 3800, 5600, 8000];
             const offset = (skipToStep >= 0 && skipToStep < times.length) ? times[skipToStep] : 0;
