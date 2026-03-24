@@ -9,7 +9,7 @@
                                                                           |\___/ /       \|_________|                                            
                                                                           \|___|/                                                                
                                                                                                                                                  
-                        SITE DÉVELOPPÉ POUR LA NSI, C WOLFLEVRAI QUI ÉCRIT BG, GG T'AS TROUVÉ LE SITE C'EST FORT.
+                        SITE DÉVELOPPÉ POUR LA NSI, C WOLFLEVRAI (et Adem) QUI ÉCRIVENT BG, GG T'AS TROUVÉ LE SITE C'EST FORT.
 -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -739,12 +739,12 @@
                 <div class="docu-final-overlay">
                     <div id="central-flowey">
                         <img id="flowey-background" src="flowey_back.png" alt="Flowey Back">
-                        <img id="central-flowey-img" src="flowey_default.png" alt="Flowey Central">
+                        <img id="central-flowey-img" src="article_chaleur_une.webp" alt="Flowey Central">
                     </div>
                     <div id="flowey-dialogue">
                         <div id="flowey-dialogue-box">
                             <div id="flowey-portrait">
-                                <img id="flowey-img" src="flowey_default.png" alt="Flowey">
+                                <img id="flowey-img" src="article_chaleur_une.webp" alt="Flowey">
                             </div>
                             <span id="flowey-text-line"></span>
                         </div>
@@ -758,7 +758,7 @@
                 <div class="excision-wrapper">
                     <div class="excision-top-line">
                         <span id="on-appelle-ca-text">on appelle ça</span>
-                        <span id="excision-pronunciation">[ɛks.si.sjɔ̃]</span>
+                        <span id="excision-pronunciation">[lis arbre di branches]</span>
                     </div>
                     <div id="excision-definition">Une excision est, en chirurgie, l'ablation d'une partie de tissu
                         biologique.</div>
@@ -879,8 +879,8 @@
             const step5 = () => {
                 document.body.style.background = 'black';
                 slide3.classList.add('fade-to-black');
-            //    slide3Main.classList.add('creepy-extreme-zoom');
-            //    setTimeout(() => startFloweyDialogue(), 1500);
+                slide3Main.classList.add('creepy-extreme-zoom');
+                setTimeout(() => startFloweyDialogue(), 1500);
                 currentStep = 5;
             };
 
@@ -896,12 +896,12 @@
             animationTimeouts.push(setTimeout(step2, Math.max(0, 1800 - offset)));
             animationTimeouts.push(setTimeout(step3, Math.max(0, 3800 - offset)));
             animationTimeouts.push(setTimeout(step4, Math.max(0, 5600 - offset)));
-            // animationTimeouts.push(setTimeout(step5, Math.max(0, 8000 - offset)));
+            animationTimeouts.push(setTimeout(step5, Math.max(0, 8000 - offset)));
         }
 
         const floweyLines = [
-            { text: "* Car c'est le nombre de vies qui ont été marquées, littéralement.", portrait: "flowey_default.png" },
-            { text: "* PAR UNE LAME", shake: true, portrait: "flowey_laugh.gif" },
+            { text: "* Car c'est le nombre de LUCAS ANDRIEU qui ont été marquées, littéralement.", portrait: "article_chaleur_une.webp" },
+            { text: "* PAR UN 9oo9ies", shake: true, portrait: "article_chaleur_dos.png" },
         ];
 
         function startFloweyDialogue() {
@@ -954,7 +954,7 @@
                         setTimeout(() => {
                             onAppelleCa.classList.add('impact-zoom');
                             setTimeout(() => {
-                                onAppelleCa.innerText = "l’excision";
+                                onAppelleCa.innerText = "ADEM KHABABA ET LUCAS ANDRIEU";
                             }, 1000);
                             setTimeout(() => {
                                 pronunciation.style.opacity = '1';
